@@ -1,4 +1,4 @@
-package com.example.pictures.viewmodel
+package com.example.pictures.viewmodels
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap

@@ -32,14 +32,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.pictures.model.Entities.PictureEntity
+import com.example.pictures.viewmodels.PicturesViewModel
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun PictureAddScreen(picture: PictureEntity? = null){
+fun PictureAddScreen(picture: PictureEntity? = null, viewModel: PicturesViewModel){
     val context = LocalContext.current
     val activity = if (context is Activity) context else null
     var imageUri = remember { mutableStateOf<Uri?>(null) }
-    var imageName = remember{mutableStateOf<String?>(picture?.title)}
+    var imageTitle = remember{mutableStateOf<String?>(picture?.title)}
     var image = remember { mutableStateOf<Bitmap?>(picture?.image?.asAndroidBitmap()) }
     var launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -72,10 +73,16 @@ fun PictureAddScreen(picture: PictureEntity? = null){
         }) {
             Text(text = "Загрузить изображение")
         }
-        TextField(value = imageName.value ?: "",
-                onValueChange = {text -> imageName.value = text},
+        TextField(value = imageTitle.value ?: "",
+                onValueChange = {text -> imageTitle.value = text},
                 singleLine = true)
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            viewModel.pictureEntity = picture
+            viewModel.newImage.value = image.value?.asImageBitmap()
+            viewModel.newTitle.value = imageTitle.value ?: ""
+            viewModel.insert()
+            activity!!.finish()
+        }) {
             Text(text = "Сохранить изображение")
         }
     }

@@ -1,5 +1,6 @@
 package com.example.pictures.view.Components
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -18,11 +19,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import com.example.pictures.model.Entities.PictureEntity
 import com.example.pictures.view.NewPictureActivity
+import com.example.pictures.viewmodels.PicturesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PictureTopBar(picture: PictureEntity){
+fun PictureTopBar(picture: PictureEntity, viewModel: PicturesViewModel){
     val context = LocalContext.current
+    val activity = if(context is Activity) context else null
     val openDialog = remember { mutableStateOf(false) }
 
     TopAppBar(title= { Text("Picture", fontSize = 22.sp) },
@@ -48,9 +51,10 @@ fun PictureTopBar(picture: PictureEntity){
                     confirmButton = {
                         Button({
                             openDialog.value = false
-                            //TODO
+                            viewModel.delete(picture)
+                            activity?.finish()
                         }) {
-                            Text("OK", fontSize = 22.sp)
+                            Text("Да", fontSize = 22.sp)
                         }
                     }
                 )

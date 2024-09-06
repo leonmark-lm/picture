@@ -6,25 +6,15 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pictures.viewmodel.getImages
+import com.example.pictures.viewmodels.PicturesViewModel
 
 
 @Composable
-fun PicturesGridScreen(){
-    //--------------
-
-    /*val images : List<Picture> = listOf(
-        Picture(0, ImageBitmap.imageResource(id = R.drawable.dubai_tower), "Dubai Tower"),
-        Picture(1, ImageBitmap.imageResource(id = R.drawable.lahta), "Lahta Tower"),
-        Picture(2, ImageBitmap.imageResource(id = R.drawable.dubai_tower), "Dubai Tower"),
-        Picture(3, ImageBitmap.imageResource(id = R.drawable.lahta), "Lahta Tower")
-    )*/
-    //--------------
-
-    val images = getImages()
-
+fun PicturesGridScreen(viewModel: PicturesViewModel){
+    val images = viewModel.items.collectAsState(initial = emptyList())
     LazyVerticalStaggeredGrid(
         modifier = Modifier.padding(5.dp),
         columns = StaggeredGridCells.Fixed(2),
@@ -32,7 +22,7 @@ fun PicturesGridScreen(){
         verticalItemSpacing = 5.dp
 
     ){
-        items(items = images){
+        items(items = images.value){
             picture -> PictureCard(picture)
         }
     }

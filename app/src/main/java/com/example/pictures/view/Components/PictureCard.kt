@@ -42,7 +42,7 @@ fun PictureCard(
         ) {
         Box() {
             Image(modifier = Modifier.fillMaxSize(),
-                bitmap = picture.image,
+                bitmap = picture.image!!,
                 contentDescription = "",
                 contentScale = ContentScale.Crop)
 
@@ -62,7 +62,7 @@ fun PictureCard(
                     .padding(12.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Text(picture.title, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                Text(picture.title!!, style = TextStyle(color = Color.White, fontSize = 16.sp))
             }
         }
     }

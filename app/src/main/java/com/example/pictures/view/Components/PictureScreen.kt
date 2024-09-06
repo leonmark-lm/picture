@@ -1,6 +1,7 @@
 package com.example.pictures.view.Components
 
 import android.app.Activity
+import android.graphics.Picture
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,11 +31,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pictures.model.Entities.PictureEntity
+import com.example.pictures.viewmodels.PicturesViewModel
+import com.example.pictures.viewmodels.getImageById
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 @Composable
-fun PictureScreen(picture: PictureEntity){
+fun PictureScreen(id: Int, viewModel: PicturesViewModel){
     val context = LocalContext.current
     val activity = if (context is Activity) context else null
+    var picture = viewModel.getById(id).collectAsState(initial = getImageById(id = 0))
+
+
     Column (modifier = Modifier
         .fillMaxSize()
         .padding(0.dp, 10.dp),
@@ -42,7 +53,9 @@ fun PictureScreen(picture: PictureEntity){
     ){
         Row(verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.Start) {
-            Text(picture.title, fontSize=25.sp)
+
+            Text(picture.value?.title ?: "", fontSize=25.sp)
+
         }
         Row(
             modifier = Modifier
@@ -56,7 +69,7 @@ fun PictureScreen(picture: PictureEntity){
                 .clickable {
                     openDialog.value = true
                 },
-                bitmap = picture.image,
+                bitmap = picture.value?.image ?: getImageById(id = 0)!!.image!!,
                 contentDescription = "",
                 contentScale = ContentScale.Crop)
 
@@ -75,13 +88,14 @@ fun PictureScreen(picture: PictureEntity){
 
                         Card(
                             modifier = Modifier
-                                .fillMaxWidth().height(600.dp),
+                                .fillMaxWidth()
+                                .height(600.dp),
                             shape = RoundedCornerShape(15.dp)
                             ) {
                             Image(
                                 modifier = Modifier
                                     .fillMaxSize(),
-                                bitmap = picture.image,
+                                bitmap = picture.value?.image!!,
                                 contentDescription = "",
                                 contentScale = ContentScale.Crop
                             )
