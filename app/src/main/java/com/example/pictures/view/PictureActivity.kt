@@ -15,9 +15,10 @@ class PictureActivity : ComponentActivity() {
         setContent{
             val arguments : Bundle? = intent.extras
             val id : Int = arguments!!.getInt("id")
+            val picture = getImageById(id = id)
             Column{
-                PictureTopBar()
-                PictureScreen(picture = getImageById(id = id))
+                PictureTopBar(picture!!)
+                PictureScreen(picture!!)
             }
         }
     }

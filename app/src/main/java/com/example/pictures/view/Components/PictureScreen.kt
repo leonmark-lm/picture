@@ -1,20 +1,15 @@
 package com.example.pictures.view.Components
 
 import android.app.Activity
-import android.content.Intent
-import android.icu.text.ListFormatter.Width
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -33,12 +28,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pictures.model.data.Picture
-import com.example.pictures.view.PictureActivity
-import com.example.pictures.view.Screen
+import com.example.pictures.model.Entities.PictureEntity
 
 @Composable
-fun PictureScreen(picture: Picture){
+fun PictureScreen(picture: PictureEntity){
     val context = LocalContext.current
     val activity = if (context is Activity) context else null
     Column (modifier = Modifier

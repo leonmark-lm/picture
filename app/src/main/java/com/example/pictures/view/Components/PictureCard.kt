@@ -16,22 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.example.pictures.model.data.Picture
-import com.example.pictures.view.MainActivity
+import com.example.pictures.model.Entities.PictureEntity
 import com.example.pictures.view.PictureActivity
-import com.example.pictures.view.Screen
 
 @Composable
 fun PictureCard(
-    picture: Picture
+    picture: PictureEntity
 ){
     val context = LocalContext.current
     Card(
