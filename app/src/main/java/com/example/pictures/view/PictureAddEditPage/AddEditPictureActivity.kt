@@ -26,7 +26,7 @@ class AddEditPictureActivity : ComponentActivity() {
 
         setContent{
             arguments?.let {
-                val id : Int = arguments.getInt(R.string.intent_picture_id_identifier.toString())
+                val id : Int = arguments.getInt("id")
                 runBlocking(Dispatchers.IO) {
                     picture = viewModel.getById(id = id).first()
                 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,7 +36,7 @@ fun PictureCard(
             .height(200.dp)
             .clickable {
                 Intent(context, PictureActivity::class.java).apply {
-                    putExtra(R.string.intent_picture_id_identifier.toString(), picture.id)
+                    putExtra("id", picture.id)
                 }.also {
                     context.startActivity(it)
                 }
@@ -46,7 +47,7 @@ fun PictureCard(
         Box() {
             Image(modifier = Modifier.fillMaxSize(),
                 bitmap = picture.image!!,
-                contentDescription = R.string.empty_string.toString(),
+                contentDescription = stringResource(R.string.empty_string),
                 contentScale = ContentScale.Crop)
 
             Box(

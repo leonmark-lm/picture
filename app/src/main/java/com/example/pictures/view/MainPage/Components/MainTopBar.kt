@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.example.pictures.R
 import com.example.pictures.view.PictureAddEditPage.AddEditPictureActivity
@@ -18,14 +19,14 @@ import com.example.pictures.view.PictureAddEditPage.AddEditPictureActivity
 @Composable
 fun MainTopBar(){
     val context = LocalContext.current
-    TopAppBar(title= { Text(R.string.app_name.toString(), fontSize = 22.sp) },
+    TopAppBar(title= { Text(stringResource(R.string.app_name), fontSize = 22.sp) },
         actions={
             IconButton(onClick = {
                 Intent(context, AddEditPictureActivity::class.java).also {
                     context.startActivity(it)
                 }
             }) {
-                Icon(Icons.Filled.AddCircle, contentDescription = R.string.empty_string.toString())
+                Icon(Icons.Filled.AddCircle, contentDescription = stringResource(R.string.empty_string))
             }
         })
 }

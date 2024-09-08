@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pictures.R
@@ -66,7 +67,7 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
                     isOpenDialog.value = true
                 },
                 bitmap = picture.value!!.image!!,
-                contentDescription = R.string.empty_string.toString(),
+                contentDescription = stringResource(R.string.empty_string),
                 contentScale = ContentScale.Crop)
 
             if (isOpenDialog.value) {
@@ -79,7 +80,7 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
                             horizontalAlignment = Alignment.End){
                             Button(onClick = { isOpenDialog.value = false }) {
                                 Icon(Icons.Filled.Close,
-                                    contentDescription = R.string.empty_string.toString())
+                                    contentDescription = stringResource(R.string.empty_string))
                             }
                         }
 
@@ -93,7 +94,7 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
                                 modifier = Modifier
                                     .fillMaxSize(),
                                 bitmap = picture.value!!.image!!,
-                                contentDescription = R.string.empty_string.toString(),
+                                contentDescription = stringResource(R.string.empty_string),
                                 contentScale = ContentScale.Crop
                             )
                         }

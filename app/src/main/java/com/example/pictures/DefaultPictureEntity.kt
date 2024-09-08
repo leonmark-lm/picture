@@ -10,5 +10,5 @@ import com.example.pictures.model.Entities.PictureEntity
 fun getDefaultPicture() = PictureEntity(
     null,
     ImageBitmap.imageResource(id = R.drawable.no_image),
-    R.string.not_load_string_data.toString()
+    "Not loaded"
 )

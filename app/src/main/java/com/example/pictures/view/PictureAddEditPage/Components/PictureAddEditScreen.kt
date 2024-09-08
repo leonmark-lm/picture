@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.pictures.R
 import com.example.pictures.model.Entities.PictureEntity
@@ -64,7 +65,7 @@ fun PictureAddEditScreen(picture: PictureEntity? = null, viewModel: PicturesView
             image.value?.let{
                 Image(it.asImageBitmap(),
                     modifier = Modifier.fillMaxSize(),
-                    contentDescription = R.string.empty_string.toString(),
+                    contentDescription = stringResource(R.string.empty_string),
                     contentScale = ContentScale.Crop
                     )
             }
@@ -74,22 +75,22 @@ fun PictureAddEditScreen(picture: PictureEntity? = null, viewModel: PicturesView
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
         }) {
-            Text(text = R.string.load_image.toString())
+            Text(text = stringResource(R.string.load_image))
         }
-        TextField(value = imageTitle.value ?: R.string.empty_string.toString(),
+        TextField(value = imageTitle.value ?: stringResource(R.string.empty_string),
                 onValueChange = {text -> imageTitle.value = text},
                 singleLine = true)
         Button(onClick = {
             with(viewModel){
                 pictureEntity = picture
                 newImage.value = image.value?.asImageBitmap()
-                newTitle.value = imageTitle.value ?: R.string.empty_string.toString()
+                newTitle.value = imageTitle.value ?: ""
                 insert()
             }
 
             activity!!.finish()
         }) {
-            Text(text = R.string.save_image.toString())
+            Text(text = stringResource(R.string.save_image))
         }
     }
 }

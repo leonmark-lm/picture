@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.example.pictures.R
 import com.example.pictures.model.Entities.PictureEntity
@@ -34,38 +35,38 @@ fun PictureTopBar(picture: PictureEntity, viewModel: PicturesViewModel){
         IconButton(onClick = {
             activity!!.finish()
         }) {
-            Icon(Icons.Filled.ArrowBack, contentDescription = R.string.empty_string.toString())
+            Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.empty_string))
         }
         },
         actions={
             IconButton(onClick = {
                 Intent(context, AddEditPictureActivity::class.java).apply {
-                    putExtra(R.string.intent_picture_id_identifier.toString(), picture.id)
+                    putExtra("id", picture.id)
                 }.also {
                     context.startActivity(it)
                 }
             }) {
-                Icon(Icons.Filled.Edit, contentDescription = R.string.empty_string.toString())
+                Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.empty_string))
 
             }
             IconButton(onClick = {
                 isOpenDialog.value = true
             }) {
-                Icon(Icons.Filled.Delete, contentDescription = R.string.empty_string.toString())
+                Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.empty_string))
             }
 
             if (isOpenDialog.value) {
                 AlertDialog(
                     onDismissRequest = { isOpenDialog.value = false},
-                    title = { Text(R.string.confirm_action.toString()) },
-                    text = { Text(R.string.confirm_question.toString()) },
+                    title = { Text(stringResource(R.string.confirm_action)) },
+                    text = { Text(stringResource(R.string.confirm_question)) },
                     confirmButton = {
                         Button({
                             isOpenDialog.value = false
                             viewModel.delete(picture)
                             activity!!.finish()
                         }) {
-                            Text(R.string.answer_yes.toString(), fontSize = 22.sp)
+                            Text(stringResource(R.string.answer_yes), fontSize = 22.sp)
                         }
                     }
                 )
