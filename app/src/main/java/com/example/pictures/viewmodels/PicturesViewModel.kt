@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.pictures.App
 import com.example.pictures.model.Entities.PictureEntity
 import com.example.pictures.model.MainDb
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,7 @@ class PicturesViewModel(val database: MainDb) : ViewModel(){
     val newImage = mutableStateOf<ImageBitmap?>(null)
     var pictureEntity: PictureEntity? = null
 
-    fun insert() = viewModelScope.launch {
+    fun insert() = viewModelScope.launch(Dispatchers.IO) {
         if (newImage.value != null && newTitle.value != null) {
             val item = pictureEntity?.copy(title = newTitle.value!!, image = newImage.value!!)
                 ?: PictureEntity(title = newTitle.value!!, image = newImage.value!!)
@@ -29,7 +30,7 @@ class PicturesViewModel(val database: MainDb) : ViewModel(){
         }
     }
 
-    fun delete(entity: PictureEntity) = viewModelScope.launch {
+    fun delete(entity: PictureEntity) = viewModelScope.launch (Dispatchers.IO){
         database.pictureEntityDAO.delete(entity)
     }
 
