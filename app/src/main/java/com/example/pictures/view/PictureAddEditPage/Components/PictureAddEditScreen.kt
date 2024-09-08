@@ -1,4 +1,4 @@
-package com.example.pictures.view.Components
+package com.example.pictures.view.PictureAddEditPage.Components
 
 import android.app.Activity
 import android.content.Context
@@ -31,18 +31,21 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.pictures.R
 import com.example.pictures.model.Entities.PictureEntity
 import com.example.pictures.viewmodels.PicturesViewModel
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun PictureAddScreen(picture: PictureEntity? = null, viewModel: PicturesViewModel){
+fun PictureAddEditScreen(picture: PictureEntity? = null, viewModel: PicturesViewModel){
     val context = LocalContext.current
     val activity = if (context is Activity) context else null
-    var imageUri = remember { mutableStateOf<Uri?>(null) }
-    var imageTitle = remember{mutableStateOf<String?>(picture?.title)}
-    var image = remember { mutableStateOf<Bitmap?>(picture?.image?.asAndroidBitmap()) }
-    var launcher = rememberLauncherForActivityResult(
+
+    val imageTitle = remember{mutableStateOf<String?>(picture?.title)}
+    val image = remember { mutableStateOf<Bitmap?>(picture?.image?.asAndroidBitmap()) }
+
+    val imageUri = remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ){uri: Uri? ->
         imageUri.value = uri
@@ -61,7 +64,7 @@ fun PictureAddScreen(picture: PictureEntity? = null, viewModel: PicturesViewMode
             image.value?.let{
                 Image(it.asImageBitmap(),
                     modifier = Modifier.fillMaxSize(),
-                    contentDescription = "",
+                    contentDescription = R.string.empty_string.toString(),
                     contentScale = ContentScale.Crop
                     )
             }
@@ -71,19 +74,22 @@ fun PictureAddScreen(picture: PictureEntity? = null, viewModel: PicturesViewMode
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
         }) {
-            Text(text = "Загрузить изображение")
+            Text(text = R.string.load_image.toString())
         }
-        TextField(value = imageTitle.value ?: "",
+        TextField(value = imageTitle.value ?: R.string.empty_string.toString(),
                 onValueChange = {text -> imageTitle.value = text},
                 singleLine = true)
         Button(onClick = {
-            viewModel.pictureEntity = picture
-            viewModel.newImage.value = image.value?.asImageBitmap()
-            viewModel.newTitle.value = imageTitle.value ?: ""
-            viewModel.insert()
+            with(viewModel){
+                pictureEntity = picture
+                newImage.value = image.value?.asImageBitmap()
+                newTitle.value = imageTitle.value ?: R.string.empty_string.toString()
+                insert()
+            }
+
             activity!!.finish()
         }) {
-            Text(text = "Сохранить изображение")
+            Text(text = R.string.save_image.toString())
         }
     }
 }

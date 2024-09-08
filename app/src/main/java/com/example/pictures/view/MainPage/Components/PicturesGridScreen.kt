@@ -1,4 +1,4 @@
-package com.example.pictures.view.Components
+package com.example.pictures.view.MainPage.Components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding

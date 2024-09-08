@@ -1,4 +1,4 @@
-package com.example.pictures.view.Components
+package com.example.pictures.view.MainPage.Components
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -21,8 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pictures.R
 import com.example.pictures.model.Entities.PictureEntity
-import com.example.pictures.view.PictureActivity
+import com.example.pictures.view.PicturePage.PictureActivity
 
 @Composable
 fun PictureCard(
@@ -33,9 +34,11 @@ fun PictureCard(
         modifier = Modifier
             .height(200.dp)
             .clickable {
-                val intent = Intent(context, PictureActivity::class.java)
-                intent.putExtra("id", picture.id)
-                context.startActivity(intent)
+                Intent(context, PictureActivity::class.java).apply {
+                    putExtra(R.string.intent_picture_id_identifier.toString(), picture.id)
+                }.also {
+                    context.startActivity(it)
+                }
             },
         shape = RoundedCornerShape(15.dp),
 
@@ -43,7 +46,7 @@ fun PictureCard(
         Box() {
             Image(modifier = Modifier.fillMaxSize(),
                 bitmap = picture.image!!,
-                contentDescription = "",
+                contentDescription = R.string.empty_string.toString(),
                 contentScale = ContentScale.Crop)
 
             Box(
@@ -66,6 +69,4 @@ fun PictureCard(
             }
         }
     }
-
-
 }

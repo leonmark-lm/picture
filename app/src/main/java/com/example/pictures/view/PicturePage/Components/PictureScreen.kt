@@ -1,4 +1,4 @@
-package com.example.pictures.view.Components
+package com.example.pictures.view.PicturePage.Components
 
 import android.app.Activity
 import android.graphics.Picture
@@ -26,13 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pictures.R
+import com.example.pictures.getDefaultPicture
 import com.example.pictures.model.Entities.PictureEntity
 import com.example.pictures.viewmodels.PicturesViewModel
-import com.example.pictures.viewmodels.getImageById
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -40,10 +42,8 @@ import kotlinx.coroutines.runBlocking
 
 @Composable
 fun PictureScreen(id: Int, viewModel: PicturesViewModel){
-    val context = LocalContext.current
-    val activity = if (context is Activity) context else null
-    var picture = viewModel.getById(id).collectAsState(initial = getImageById(id = 0))
-
+    val picture = viewModel.getById(id).collectAsState(initial = getDefaultPicture())
+    val isOpenDialog = remember { mutableStateOf(false) }
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -53,27 +53,23 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
     ){
         Row(verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.Start) {
-
-            Text(picture.value?.title ?: "", fontSize=25.sp)
-
+            Text(picture.value!!.title!!, fontSize=25.sp)
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp)
         ){
-
-            val openDialog = remember { mutableStateOf(false) }
             Image(modifier = Modifier
                 .fillMaxSize()
                 .clickable {
-                    openDialog.value = true
+                    isOpenDialog.value = true
                 },
-                bitmap = picture.value?.image ?: getImageById(id = 0)!!.image!!,
-                contentDescription = "",
+                bitmap = picture.value!!.image!!,
+                contentDescription = R.string.empty_string.toString(),
                 contentScale = ContentScale.Crop)
 
-            if (openDialog.value) {
+            if (isOpenDialog.value) {
                 AlertDialog(
                     onDismissRequest = {},
                     title = {  },
@@ -81,8 +77,9 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
                     confirmButton = {
                         Column(verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.End){
-                            Button(onClick = { openDialog.value = false }) {
-                                Icon(Icons.Filled.Close, contentDescription = "")
+                            Button(onClick = { isOpenDialog.value = false }) {
+                                Icon(Icons.Filled.Close,
+                                    contentDescription = R.string.empty_string.toString())
                             }
                         }
 
@@ -95,23 +92,14 @@ fun PictureScreen(id: Int, viewModel: PicturesViewModel){
                             Image(
                                 modifier = Modifier
                                     .fillMaxSize(),
-                                bitmap = picture.value?.image!!,
-                                contentDescription = "",
+                                bitmap = picture.value!!.image!!,
+                                contentDescription = R.string.empty_string.toString(),
                                 contentScale = ContentScale.Crop
                             )
                         }
-
-
                     },
                     containerColor = Color.Transparent
                 )
-            }
-        }
-        Row {
-            Button(onClick = {
-                activity!!.finish()
-            }) {
-                Text("Go to the main page")
             }
         }
 

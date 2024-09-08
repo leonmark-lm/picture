@@ -1,4 +1,4 @@
-package com.example.pictures.view
+package com.example.pictures.view.PictureAddEditPage
 
 import android.os.Build
 import android.os.Bundle
@@ -6,16 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.collectAsState
+import com.example.pictures.R
 import com.example.pictures.model.Entities.PictureEntity
-import com.example.pictures.view.Components.PictureAddScreen
+import com.example.pictures.view.PictureAddEditPage.Components.PictureAddEditScreen
 import com.example.pictures.viewmodels.PicturesViewModel
-import com.example.pictures.viewmodels.getImageById
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class NewPictureActivity : ComponentActivity() {
+class AddEditPictureActivity : ComponentActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +26,12 @@ class NewPictureActivity : ComponentActivity() {
 
         setContent{
             arguments?.let {
-                val id : Int = arguments.getInt("id")
+                val id : Int = arguments.getInt(R.string.intent_picture_id_identifier.toString())
                 runBlocking(Dispatchers.IO) {
                     picture = viewModel.getById(id = id).first()
                 }
             }
-            PictureAddScreen(picture, viewModel)
+            PictureAddEditScreen(picture, viewModel)
         }
     }
 }

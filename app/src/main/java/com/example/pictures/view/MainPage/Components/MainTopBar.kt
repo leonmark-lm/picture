@@ -1,11 +1,8 @@
-package com.example.pictures.view.Components
+package com.example.pictures.view.MainPage.Components
 
-import android.content.Context
 import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,19 +11,21 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
-import com.example.pictures.view.NewPictureActivity
+import com.example.pictures.R
+import com.example.pictures.view.PictureAddEditPage.AddEditPictureActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopBar(){
     val context = LocalContext.current
-    TopAppBar(title= { Text("Pictures", fontSize = 22.sp) },
+    TopAppBar(title= { Text(R.string.app_name.toString(), fontSize = 22.sp) },
         actions={
             IconButton(onClick = {
-                val intent = Intent(context, NewPictureActivity::class.java)
-                context.startActivity(intent)
+                Intent(context, AddEditPictureActivity::class.java).also {
+                    context.startActivity(it)
+                }
             }) {
-                Icon(Icons.Filled.AddCircle, contentDescription = "Добавить картинку")
+                Icon(Icons.Filled.AddCircle, contentDescription = R.string.empty_string.toString())
             }
         })
 }

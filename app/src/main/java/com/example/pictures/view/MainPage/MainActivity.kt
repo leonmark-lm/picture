@@ -1,4 +1,4 @@
-package com.example.pictures.view
+package com.example.pictures.view.MainPage
 
 import android.database.CursorWindow
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
-import com.example.pictures.view.Components.MainTopBar
-import com.example.pictures.view.Components.PicturesGridScreen
+import com.example.pictures.view.MainPage.Components.MainTopBar
+import com.example.pictures.view.MainPage.Components.PicturesGridScreen
 import com.example.pictures.viewmodels.PicturesViewModel
 import java.lang.reflect.Field
 

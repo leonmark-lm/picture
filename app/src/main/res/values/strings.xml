@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Pictures</string>
+
+    <string name="intent_picture_id_identifier">id</string>
+
+    <string name="not_load_string_data">Not load</string>
+    <string name="empty_string" />
+
+    <string name="load_image">Загрузить изображение</string>
+    <string name="add_image">Добавить изображение</string>
+    <string name="save_image">Сохранить изображение</string>
+
+    <string name="confirm_action">Подтверждение действия</string>
+    <string name="confirm_question">Вы действительно хотите удалить выбранный элемент?</string>
+    <string name="answer_yes">Да</string>
 </resources>
