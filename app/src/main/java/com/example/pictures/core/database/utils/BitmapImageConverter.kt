@@ -1,4 +1,4 @@
-package com.example.pictures.model
+package com.example.pictures.core.database.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

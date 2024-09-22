@@ -1,13 +1,11 @@
-package com.example.pictures.model.Entities
+package com.example.pictures.core.database.models
 
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 
 @Entity(tableName = "picture_table")
-data class PictureEntity (
+data class PictureDBO (
     @PrimaryKey(autoGenerate = true)
     val id : Int? = null,
     var image: ImageBitmap?,
