@@ -1,4 +1,4 @@
-package com.example.pictures.ui.view.HomePage
+package com.example.pictures.features.view.HomePage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

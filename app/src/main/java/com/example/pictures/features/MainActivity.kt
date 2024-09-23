@@ -1,13 +1,11 @@
-package com.example.pictures.ui.view
+package com.example.pictures.features
 
 import android.database.CursorWindow
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.rememberNavController
-import com.example.pictures.ui.navigation.PictureNavGraph
-import java.lang.reflect.Field
+import com.example.pictures.features.view.PictureApp
 
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
         setCursorWindowSize(100 * 1024 * 1024)
         setContent {
-            PictureNavGraph(navController = rememberNavController())
+            PictureApp(intent = intent)
         }
     }
 

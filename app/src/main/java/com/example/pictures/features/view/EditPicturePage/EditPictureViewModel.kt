@@ -1,5 +1,9 @@
-package com.example.pictures.ui.view.EditPicturePage
+package com.example.pictures.features.view.EditPicturePage
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -34,12 +38,22 @@ class EditPictureViewModel(savedStateHandle: SavedStateHandle,
         }
     }
 
-    private val MAX_TITLE_LENGTH = 30
+    companion object{
+        val MAX_TITLE_LENGTH = 30
+        val DEFAULT_TITLE_VALUE = ""
+    }
 
     private fun validateInput(picture: Picture): Boolean {
         return with(picture) {
             id != null && title != null && image != null && title?.run{length <= MAX_TITLE_LENGTH} ?: false
         }
+    }
+
+    fun getBitmapByUri(context: Context, uri: Uri): Bitmap {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        inputStream?.close()
+        return bitmap
     }
 
 }

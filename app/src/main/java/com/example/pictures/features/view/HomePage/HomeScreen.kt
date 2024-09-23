@@ -1,6 +1,6 @@
-package com.example.pictures.ui.view.HomePage
+package com.example.pictures.features.view.HomePage
 
-import AppViewModelProvider
+import com.example.pictures.features.AppViewModelProvider
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,7 +21,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -32,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -40,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pictures.R
 import com.example.pictures.core.data.models.Picture
-import com.example.pictures.ui.navigation.NavDestination
+import com.example.pictures.features.navigation.NavDestination
 
 object HomeScreenNavDestination : NavDestination(){
     override val route: String = "home"
@@ -54,11 +52,8 @@ fun HomeScreen(navToAddPictureScreen: () -> Unit,
     viewModel: MainScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     val images = viewModel.homeUiState.collectAsState()
 
-    Scaffold (
-        topBar = {MainTopBar(navToAddPictureScreen)},
-        bottomBar = {},
-        floatingActionButton = {}
-        ){
+    Column{
+        MainTopBar(navToAddPictureScreen)
         PictureList(images, navToPictureScreen)
     }
 }
@@ -103,10 +98,12 @@ fun PictureCard(
 
         ) {
         Box() {
-            Image(modifier = Modifier.fillMaxSize(),
-                bitmap = picture.image!!,
-                contentDescription = stringResource(R.string.empty_string),
-                contentScale = ContentScale.Crop)
+            picture.image?.let {
+                Image(modifier = Modifier.fillMaxSize(),
+                    bitmap = it,
+                    contentDescription = stringResource(R.string.empty_string),
+                    contentScale = ContentScale.Crop)
+            }
 
             Box(
                 modifier = Modifier
@@ -124,7 +121,10 @@ fun PictureCard(
                     .padding(12.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Text(picture.title!!, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                picture.title?.let {
+                    Text(it, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                }
+
             }
         }
     }

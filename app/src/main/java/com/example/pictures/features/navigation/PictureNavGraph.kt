@@ -1,4 +1,4 @@
-package com.example.pictures.ui.navigation
+package com.example.pictures.features.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -6,14 +6,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.pictures.ui.view.HomePage.HomeScreen
-import com.example.pictures.ui.view.HomePage.HomeScreenNavDestination
-import com.example.pictures.ui.view.AddPicturePage.AddPictureScreen
-import com.example.pictures.ui.view.AddPicturePage.AddPictureScreenNavDestination
-import com.example.pictures.ui.view.EditPicturePage.EditPictureScreen
-import com.example.pictures.ui.view.EditPicturePage.EditPictureScreenNavDestination
-import com.example.pictures.ui.view.PicturePage.PictureScreen
-import com.example.pictures.ui.view.PicturePage.PictureScreenNavDestination
+import com.example.pictures.features.view.HomePage.HomeScreen
+import com.example.pictures.features.view.HomePage.HomeScreenNavDestination
+import com.example.pictures.features.view.AddPicturePage.AddPictureScreen
+import com.example.pictures.features.view.AddPicturePage.AddPictureScreenNavDestination
+import com.example.pictures.features.view.EditPicturePage.EditPictureScreen
+import com.example.pictures.features.view.EditPicturePage.EditPictureScreenNavDestination
+import com.example.pictures.features.view.PicturePage.PictureScreen
+import com.example.pictures.features.view.PicturePage.PictureScreenNavDestination
 
 @Composable
 fun PictureNavGraph(navController: NavHostController){
@@ -43,6 +43,16 @@ fun PictureNavGraph(navController: NavHostController){
             )
         }
         composable(route = AddPictureScreenNavDestination.route) {
+            AddPictureScreen(
+                navToHomeScreen = {
+                    navController.navigate(HomeScreenNavDestination.route)
+                }
+            )
+        }
+        composable(route = AddPictureScreenNavDestination.routeWithArgs,
+            arguments = listOf(navArgument(AddPictureScreenNavDestination.itemUriArg) {
+                type = NavType.StringType
+            })) {
             AddPictureScreen(
                 navToHomeScreen = {
                     navController.navigate(HomeScreenNavDestination.route)

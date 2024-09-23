@@ -6,6 +6,8 @@
     <string name="not_load_string_data">Not load</string>
     <string name="empty_string" />
 
+    <string name="title_text_field_hint">Title...</string>
+
     <string name="load_image">Загрузить изображение</string>
     <string name="add_image">Добавить изображение</string>
     <string name="save_image">Сохранить изображение</string>
